@@ -1,7 +1,10 @@
 import cv2
 import numpy as np
 import math
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 from OpenGL.GL import *
+from OpenGL.GLU import *
 
 
 
@@ -71,7 +74,7 @@ def extract_2d_joint_from_heatmap(heatmap, input_size, joints_2d):
         joint_coord = np.unravel_index(np.argmax(heatmap_resized[:, :, joint_num]), (input_size, input_size))
         joints_2d[joint_num, :] = joint_coord
 
-    return
+    return joints_2d
 
 
 def extract_3d_joints_from_heatmap(joints_2d, x_hm, y_hm, z_hm, input_size, joints_3d):
@@ -88,7 +91,7 @@ def extract_3d_joints_from_heatmap(joints_2d, x_hm, y_hm, z_hm, input_size, join
         joints_3d[joint_num, 2] = joint_z
     joints_3d -= joints_3d[14, :]
 
-    return
+    return joints_3d
 
 def draw_limbs_2d(img, joints_2d, limb_parents):
     for limb_num in range(len(limb_parents)-1):
@@ -104,7 +107,7 @@ def draw_limbs_2d(img, joints_2d, limb_parents):
                                    int(deg),
                                    0, 360, 1)
         cv2.fillConvexPoly(img, polygon, color=(0,255,0))
-    return
+    return img
 
 def draw_limbs_3d(joints_3d, limb_parents, ax):
 
@@ -133,19 +136,7 @@ def draw_limbs_3d_gl(joints_3d, limb_parents):
     glColor3f(1,1,1)
     glBegin(GL_LINES)
     for i in range(joints_3d.shape[0]):
+        # print(joints_3d[i, :])
         glVertex3fv((joints_3d[i, 0], joints_3d[i, 1], joints_3d[i, 2]))
         glVertex3fv((joints_3d[limb_parents[i], 0], joints_3d[limb_parents[i], 1], joints_3d[limb_parents[i], 2]))
     glEnd()
-
-
-
-
-
-
-
-
-
-
-
-
-

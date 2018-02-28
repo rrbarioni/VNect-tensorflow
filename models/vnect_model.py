@@ -6,8 +6,8 @@ import numpy as np
 
 
 class VNect():
-    def __init__(self, input_size):
-        self.is_training = False
+    def __init__(self, input_size, is_training=False):
+        self.is_training = is_training
         self.input_holder = tf.placeholder(dtype=tf.float32,
                                            shape=(None, input_size, input_size, 3))
         self._create_network()

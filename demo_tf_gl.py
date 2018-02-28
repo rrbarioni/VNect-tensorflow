@@ -9,7 +9,7 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
-from models.nets import vnect_model_bn_folded as vnect_model
+from models import vnect_model as vnect_model
 import utils.utils as utils
 
 parser = argparse.ArgumentParser()
